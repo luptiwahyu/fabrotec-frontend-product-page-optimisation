@@ -9,3 +9,8 @@ export interface Sort {
   slug: string
   name: string
 }
+
+export interface Params {
+  sort: string,
+  category: string
+}

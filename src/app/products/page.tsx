@@ -11,13 +11,13 @@ import { Sort } from './models/product'
 
 const Products: FC = () => {
   const [sort, setSort] = useState<string>('asc')
+  const [category, setCategory] = useState<string>('')
 
   const {
     isLoading,
     isFetching,
-    isError,
     data: products = [],
-  } = useGetProductsQuery(sort)
+  } = useGetProductsQuery({ category, sort })
 
   const {
     data: categories = []
@@ -41,7 +41,12 @@ const Products: FC = () => {
           <div className="mr-4">Filter Category</div>
           <div className="max-w-sm min-w-[200px] bg-white">
             <div className="relative">
-              <select className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded pl-3 pr-8 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md appearance-none cursor-pointer">
+              <select
+                className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded pl-3 pr-8 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md appearance-none cursor-pointer"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+              >
+                <option value="">Select Category</option>
                 { categories.map((category) => (
                   <option key={category.slug} value={category.slug}>{category.name}</option>
                 ))}
@@ -82,12 +87,14 @@ const Products: FC = () => {
             >
               <Image
                 src={product.images[0]}
-                alt=""
+                alt={product.title}
                 className="object-cover aspect-square rounded-tl-xl rounded-tr-xl"
-                width={300}
-                height={300}
+                width={500}
+                height={500}
+                loading="lazy"
+                quality={70}
               />
-              <div className="p-2">
+              <div className="p-4">
                 <div
                   className="mb-1 text-lg font-semibold truncate"
                   title={product.title}

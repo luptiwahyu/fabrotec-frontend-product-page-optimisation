@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import type { Params } from './models/product'
 
 export const productApi = createApi({
   reducerPath: 'productApi',
@@ -7,10 +8,10 @@ export const productApi = createApi({
   }),
   endpoints: (build) => ({
     getProducts: build.query({
-      query: (sort: string) => ({
-        url: 'products',
+      query: ({ sort, category }: Params) => ({
+        url: !category ? 'products' : `products/category/${category}`,
         params: {
-          limit: 10,
+          limit: 20,
           sortBy: 'price',
           order: sort,
         },
