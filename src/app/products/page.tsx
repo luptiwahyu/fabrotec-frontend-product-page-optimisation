@@ -1,19 +1,23 @@
 'use client'
 
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import Image from 'next/image'
-import { useGetProductsQuery, useGetCategoriesQuery } from './stores/productApi'
+import {
+  useGetProductsQuery,
+  useGetCategoriesQuery,
+ } from './stores/productApi'
 import ArrowIcon from './components/arrow-icon'
-import css from './styles/index.module.css'
-import { Product, Sort } from './models/product'
-import { Category } from './models/category'
+import { Sort } from './models/product'
 
 const Products: FC = () => {
+  const [sort, setSort] = useState<string>('asc')
+
   const {
     isLoading,
+    isFetching,
     isError,
     data: products = [],
-  } = useGetProductsQuery()
+  } = useGetProductsQuery(sort)
 
   const {
     data: categories = []
@@ -50,7 +54,11 @@ const Products: FC = () => {
           <div className="mr-4">Sort By</div>
           <div className="max-w-sm min-w-[200px] bg-white">
             <div className="relative">
-              <select className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded pl-3 pr-8 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md appearance-none cursor-pointer">
+              <select
+                className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded pl-3 pr-8 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md appearance-none cursor-pointer"
+                value={sort}
+                onChange={(e) => setSort(e.target.value)}
+              >
                 { sortOptions.map((sort) => (
                   <option key={sort.slug} value={sort.slug}>{sort.name}</option>
                 ))}
@@ -61,9 +69,13 @@ const Products: FC = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-6 gap-4">
+      {
+        (isLoading || isFetching) && <div className="h-[34px] leading-[34px]">Loading...</div>
+      }
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
         {
-         products.map((product) => (
+          !isLoading && !isFetching && products.map((product) => (
             <div
               className="rounded-xl bg-white col-span-1 shadow-md cursor-pointer animate-fade-in-up"
               key={product.id}

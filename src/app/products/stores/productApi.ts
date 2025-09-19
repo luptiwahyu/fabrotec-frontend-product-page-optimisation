@@ -7,8 +7,13 @@ export const productApi = createApi({
   }),
   endpoints: (build) => ({
     getProducts: build.query({
-      query: () => ({
+      query: (sort: string) => ({
         url: 'products',
+        params: {
+          limit: 10,
+          sortBy: 'price',
+          order: sort,
+        },
       }),
       transformResponse: (response) => {
         return response.products
