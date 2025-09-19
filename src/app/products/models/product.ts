@@ -4,3 +4,8 @@ export interface Product {
   description: string,
   images: string[],
 }
+
+export interface Sort {
+  slug: string
+  name: string
+}
