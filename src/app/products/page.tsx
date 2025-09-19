@@ -91,8 +91,7 @@ const Products: FC = () => {
                 className="object-cover aspect-square rounded-tl-xl rounded-tr-xl"
                 width={500}
                 height={500}
-                loading="lazy"
-                quality={70}
+                priority={true}
               />
               <div className="p-4">
                 <div
