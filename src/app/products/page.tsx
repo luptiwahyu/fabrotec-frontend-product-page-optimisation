@@ -37,7 +37,7 @@ const Products: FC = () => {
   return (
     <>
       <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center py-2 animate-fade-in-up">
+        <div className="flex items-center py-2">
           <div className="mr-4">Filter Category</div>
           <div className="max-w-sm min-w-[200px] bg-white">
             <div className="relative">

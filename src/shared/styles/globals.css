@@ -25,3 +25,29 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   padding: 20px;
 }
+
+@theme {
+  --animate-fade-in-up: fadeInUp 0.6s ease-out forwards;
+  --animate-wiggle: wiggle 1s ease-in-out infinite;
+
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes wiggle {
+    0%,
+    100% {
+      transform: rotate(-3deg);
+    }
+    50% {
+      transform: rotate(3deg);
+    }
+  }
+}
